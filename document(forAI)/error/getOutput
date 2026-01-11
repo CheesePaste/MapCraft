@@ -1,0 +1,140 @@
+# MapCraft模组开发文档 - 配方输出物品获取修复方案
+
+## 问题描述
+**错误位置**: `RecipeCollector.java` 中的 `processRecipes` 方法
+**原始错误代码**:
+```java
+ItemStack outputStack = recipe.getOutput(DynamicRegistryManager.EMPTY);
+```
+
+**编译错误**: `Cannot resolve method 'getOutput' in 'CraftingRecipe'`
+
+## 原因分析
+在 Minecraft 1.21.1 中，`Recipe` 接口的 API 发生了变化：
+
+1. **旧版本**: 使用 `getOutput(DynamicRegistryManager)` 方法
+2. **新版本 (1.21.1)**: 使用 `getResult(RegistryWrapper.WrapperLookup)` 方法
+
+从提供的 `Recipe` 接口源代码可以看到：
+```java
+ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup);
+```
+
+`DynamicRegistryManager` 已被替换为 `RegistryWrapper.WrapperLookup` 类型。
+
+## 解决方案
+
+### 方案一：直接修复（推荐）
+```java
+// 替换前（错误）：
+ItemStack outputStack = recipe.getOutput(DynamicRegistryManager.EMPTY);
+
+// 替换后（正确）：
+ItemStack outputStack = recipe.getResult(registriesLookup);
+```
+
+### 方案二：完整的上下文修改
+
+1. **修改方法签名**：
+```java
+// 修改前：
+private static void processRecipes(List<RecipeEntry<CraftingRecipe>> recipes)
+
+// 修改后：
+private static void processRecipes(List<RecipeEntry<CraftingRecipe>> recipes, RegistryWrapper.WrapperLookup registriesLookup)
+```
+
+2. **修改调用处**：
+```java
+// 修改前：
+processRecipes(recipes);
+
+// 修改后：
+processRecipes(recipes, server.getRegistryManager());
+```
+
+3. **修改获取输出物品的代码**：
+```java
+// 修改前：
+if (recipe == null || recipe.getOutput(DynamicRegistryManager.EMPTY).isEmpty()) {
+    continue;
+}
+ItemStack outputStack = recipe.getOutput(DynamicRegistryManager.EMPTY);
+
+// 修改后：
+if (recipe == null) {
+    continue;
+}
+ItemStack outputStack = recipe.getResult(registriesLookup);
+if (outputStack.isEmpty()) {
+    continue;
+}
+```
+
+## 相关类的变更说明
+
+### 1. `RegistryWrapper.WrapperLookup`
+- **位置**: `net.minecraft.registry.RegistryWrapper.WrapperLookup`
+- **作用**: 替代旧版本的 `DynamicRegistryManager`
+- **获取方式**: `MinecraftServer.getRegistryManager()`
+
+### 2. `Recipe` 接口的重要方法
+```java
+// 获取配方输出物品
+ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup);
+
+// 检查配方是否匹配输入
+boolean matches(T input, World world);
+
+// 合成物品
+ItemStack craft(T input, RegistryWrapper.WrapperLookup lookup);
+```
+
+### 3. `Ingredient` 获取物品的方式保持不变
+```java
+// 正确方式：
+ItemStack[] matchingStacks = ingredient.getMatchingStacks();
+Item item = matchingStacks[0].getItem();
+```
+
+## 最佳实践建议
+
+### 1. 统一参数传递
+```java
+public static void collectAllRecipes(MinecraftServer server) {
+    RecipeManager recipeManager = server.getRecipeManager();
+    RegistryWrapper.WrapperLookup registriesLookup = server.getRegistryManager();
+
+    // 传递给需要的方法
+    processRecipes(recipes, registriesLookup);
+}
+```
+
+### 2. 添加空值检查
+```java
+ItemStack outputStack = recipe.getResult(registriesLookup);
+if (outputStack.isEmpty()) {
+    // 处理空输出的情况
+    continue;
+}
+```
+
+### 3. 异常处理
+```java
+try {
+    ItemStack outputStack = recipe.getResult(registriesLookup);
+    // 处理输出
+} catch (Exception e) {
+    MapCraftMod.LOGGER.error("获取配方输出失败: {}", recipe.getId(), e);
+    continue;
+}
+```
+
+## 迁移检查清单
+
+✅ 将 `DynamicRegistryManager` 替换为 `RegistryWrapper.WrapperLookup`
+✅ 将 `getOutput()` 替换为 `getResult()`
+✅ 更新方法签名中的参数类型
+✅ 更新调用处传递正确的参数
+✅ 添加适当的空值检查
+✅ 更新导入语句（如果需要）

@@ -1,0 +1,21 @@
+src/main/java/com/cp/
+├── MapCraftMod.java               # 模组主类
+├── config/
+│   └── ModConfig.java             # 配置管理*
+├── data/
+│   ├── RecipeGraph.java           # 配方关系图数据结构（已实现）
+│   ├── RecipeNode.java            # 配方节点（已实现）
+│   ├── RecipeEdge.java            # 配方连线（已实现）
+│   └── RecipeCollector.java       # 配方收集器（已实现）
+├── gui/
+│   ├── RecipeMapScreen.java       # 主屏幕
+│   ├── RecipeMapRenderer.java     # 渲染器*
+│   ├── GraphLayout.java           # 布局算法*
+│   └── InteractionHandler.java    # 交互处理器*
+├── input/
+│   ├── KeybindHandler.java        # 按键绑定
+│   └── MouseHandler.java          # 鼠标事件*
+└── util/
+    ├── GraphUtils.java            # 图相关工具*
+    ├── RenderUtils.java           # 渲染工具*
+    └── PerformanceMonitor.java    # 性能监控*

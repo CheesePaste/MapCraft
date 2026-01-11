@@ -1,0 +1,40 @@
+**AI开发任务提示词 - MapCraft模组**
+
+**项目基本信息：**
+- Minecraft版本：1.21.1 Fabric
+- 模组ID：map-craft
+- 包路径：com.cp
+- 核心目标：创建全局合成配方关系图，按M键打开
+我计划多AI协同开发，你只需要实现一点点内容，不需要把我抛出内容全部实现。我会修复你的语法错误。请确保你理解Minecraft源代码，否则若需要查看哪个Minecraft内部类请告诉我，我会粘贴给你。
+
+**重点要求：**
+- 配置文件,语法必须精确匹配Minecraft 1.21.1和Fabric Loader版本
+- 主类要包含标准的ModInitializer实现
+- 添加清晰的初始化日志以便调试
+- 保持代码结构整洁，为后续功能预留扩展点
+- 使用中文回答
+- 在结尾说明下个AI需要了解的类和需要实现的内容
+
+
+代码结构：src/main/java/com/cp/
+     ├── MapCraftMod.java               # 模组主类
+     ├── config/
+     │   └── ModConfig.java             # 配置管理
+     ├── data/
+     │   ├── RecipeGraph.java           # 配方关系图数据结构
+     │   ├── RecipeNode.java            # 配方节点
+     │   ├── RecipeEdge.java            # 配方连线
+     │   └── RecipeCollector.java       # 配方收集器
+     ├── gui/
+     │   ├── RecipeMapScreen.java       # 主屏幕
+     │   ├── RecipeMapRenderer.java     # 渲染器
+     │   ├── GraphLayout.java           # 布局算法
+     │   └── InteractionHandler.java    # 交互处理器
+     ├── input/
+     │   ├── KeybindHandler.java        # 按键绑定
+     │   └── MouseHandler.java          # 鼠标事件
+     └── util/
+         ├── GraphUtils.java            # 图相关工具
+         ├── RenderUtils.java           # 渲染工具
+         └── PerformanceMonitor.java    # 性能监控，package com.cp.data;
+我计划目前开发data部分。上个AI实现buildGraph方法产生问题，getOutput方法不存在。使用中文回答。下面是你会需要的类
