@@ -1,6 +1,5 @@
 package com.cp.input;
 
-import com.cp.gui.RecipeMapScreen;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
@@ -17,14 +16,5 @@ public class KeybindHandler {
                 GLFW.GLFW_KEY_M,
                 "category.map-craft.main"
         ));
-    }
-
-    public static void handleKeyInput() {
-        while (openMapKeybind.wasPressed()) {
-            MinecraftClient minecraftClient=MinecraftClient.getInstance();
-            if (minecraftClient != null && minecraftClient.player != null) {
-                minecraftClient.setScreen(new RecipeMapScreen());
-            }
-        }
     }
 }

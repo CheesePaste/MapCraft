@@ -18,6 +18,7 @@
 		"main": [
 			"com.cp.MapCraft"
 		],
+		"client": ["com.cp.MapCraftClient"],
 		"fabric-datagen": [
 			"com.cp.MapCraftDataGenerator"
 		]

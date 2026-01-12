@@ -1,0 +1,15 @@
+[Server thread/ERROR] (MapCraftTest) 配方收集测试失败:
+ java.util.ConcurrentModificationException: null
+	at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1095) ~[?:?]
+	at java.base/java.util.ArrayList$Itr.next(ArrayList.java:1049) ~[?:?]
+	at knot/com.cp.data.RecipeCollector.buildChainRelationships(RecipeCollector.java:252) ~[main/:?]
+	at knot/com.cp.data.RecipeCollector.buildIndirectRelationships(RecipeCollector.java:174) ~[main/:?]
+	at knot/com.cp.data.RecipeCollector.buildGraph(RecipeCollector.java:123) ~[main/:?]
+	at knot/com.cp.data.RecipeCollector.collectAllRecipes(RecipeCollector.java:31) ~[main/:?]
+	at knot/com.cp.MapCraftGraphTest.testRecipeCollection(MapCraftTest.java:36) ~[main/:?]
+	at knot/com.cp.MapCraftGraphTest.lambda$onInitialize$0(MapCraftTest.java:28) ~[main/:?]
+	at knot/net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.lambda$static$2(ServerLifecycleEvents.java:49) ~[fabric-lifecycle-events-v1-652de5e3-2.6.0+0865547519.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.handler$zdi000$fabric-lifecycle-events-v1$afterSetupServer(MinecraftServer.java:3869) ~[minecraft-merged-48f5f74c97-1.21.1-net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:718) ~[minecraft-merged-48f5f74c97-1.21.1-net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:287) ~[minecraft-merged-48f5f74c97-1.21.1-net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
