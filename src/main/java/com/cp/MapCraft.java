@@ -2,6 +2,7 @@ package com.cp;
 
 import com.cp.data.RecipeCollector;
 import com.cp.data.RecipeGraph;
+import com.cp.input.KeybindHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
@@ -17,9 +18,6 @@ public class MapCraft implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("MapCraft Mod 初始化中...");
-
-        // 初始化配置
-        // com.cp.config.ModConfig.init();
 
         // 如果是开发环境，启用测试模块
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
@@ -38,6 +36,7 @@ public class MapCraft implements ModInitializer {
      * 客户端初始化（在ClientModInitializer中调用）
      */
     public static void initializeClient() {
+        KeybindHandler.registerKeybinds();
         LOGGER.info("初始化MapCraft客户端...");
     }
 
@@ -65,10 +64,6 @@ public class MapCraft implements ModInitializer {
             }
         }, "MapCraft-RecipeCollector").start();
     }
-
-
-
-
     public static Identifier id(String path) {
         return Identifier.of(MOD_ID, path);
     }
