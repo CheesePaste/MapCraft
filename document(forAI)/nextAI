@@ -54,8 +54,7 @@ com.cp.data.RecipeNode       // 配方节点（包含位置、输入输出等）
 com.cp.data.RecipeEdge       // 配方边（关系类型、权重）
 
 // 数据访问方式
-RecipeCollector collector = new RecipeCollector();
-RecipeGraph graph = collector.getRecipeGraph();
+RecipeGraph graph = MapCraft.collector.getRecipeGraph();
 Map<Identifier, RecipeNode> nodes = graph.getNodes();
 List<RecipeEdge> edges = graph.getEdges();
 下面是你会需要的类和数据：
