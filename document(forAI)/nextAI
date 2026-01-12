@@ -20,7 +20,8 @@
 src/main/java/com/cp/
 ├── MapCraft.java                  # 模组主类
 ├── MapCraftGraphTest.java         # 测试类
-├── MapCraftDataGenerator          # 数据生成类*
+├── MapCraftDataGenerator.java     # 数据生成类
+├── MapCraftClient.java            # 客户端类
 ├── config/
 │   └── ModConfig.java             # 配置管理*
 ├── data/

@@ -14,7 +14,7 @@ src/main/java/com/cp/
 │   ├── RecipeProcessor.java       # 配方处理器（新增）
 │   └── GraphBuilder.java          # 图构建器（新增）
 ├── gui/
-│   ├── RecipeMapScreen.java       # 主屏幕
+│   ├── RecipeMapScreen.java       # 主屏幕*
 │   ├── RecipeMapRenderer.java     # 渲染器*
 │   ├── GraphLayout.java           # 布局算法*
 │   └── InteractionHandler.java    # 交互处理器*
